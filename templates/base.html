@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="/static/images/favicon.ico" type="image/ico" />
+
+	{% block head %}
+
+
+
+
+
+	{% endblock %}
+
+	<!-- Bootstrap -->
+	<link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<!-- Custom Theme Style -->
+	<link href="/static/css/custom.css" rel="stylesheet">
+
+</head>
+
+<body class="nav-md">
+	<div class="container body" id="add_student">
+		<div class="main_container">
+			<div class="col-md-3 left_col">
+				<div class="left_col scroll-view">
+					<div class="navbar nav_title" style="border: 0;">
+						<a href="{{ url_for ('dashboard') }}" class="site_title"><i class="fa fa-paw"></i> <span>School
+								Managment</span></a>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<!-- menu profile quick info -->
+					<div class="profile clearfix">
+						<div class="profile_pic">
+							<img src="/static/images/img.jpg" alt="..." class="img-circle profile_img">
+						</div>
+						<div class="profile_info">
+							<span>Welcome,</span>
+							<h2>{{current_user.name}}</h2>
+						</div>
+					</div>
+					<!-- /menu profile quick info -->
+
+					<br />
+
+					<!-- sidebar menu -->
+					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+						<div class="menu_section">
+							<h3>General</h3>
+							<ul class="nav side-menu">
+
+								<li><a href="{{ url_for('dashboard') }}"><i class="fa fa-tachometer"
+											aria-hidden="true"></i> Dashboard </a></li>
+
+								</li>
+								<li><a>
+									<i class="fa fa-file-text" aria-hidden="true"></i> Exam
+									<span class="fa fa-chevron-down"></span>
+									<ul class="nav child_menu">
+										<li><a href="{{ url_for('add_exam') }}">Add Exam</a></li>
+										<li><a href="{{ url_for('show_exam')}}">Show Exam</a></li>
+									</ul>
+								</a></li>
+								<li><a><i class="fa fa-calendar-o"></i>
+										Attendecne <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="{{ url_for('add_attendence') }}">Add Attendecne</a></li>
+										<li><a href="{{ url_for('show_student_attendence')}}">Show Student
+												Attendence</a></li>
+										<li><a href="{{ url_for('show_staff_attendence' )}}">Show Staff Attendence </a>
+										</li>
+										<li><a href="{{ url_for('show_attendence') }}"> Show Attendecne </a></li>
+									</ul>
+								</li>
+
+								<li><a><i class="fa fa-users" aria-hidden="true"></i> All User Setting <span
+									class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="{{ url_for('all_students') }}">All Students</a></li>
+										<li><a href="{{ url_for('staf_list')}}">All Staff </a></li>
+									</ul>
+									
+								</li>
+								
+								{% if current_user.user_type == 'admin' %}
+								<li><a><i class="fa fa-edit"></i> User Setting <span
+											class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="{{ url_for('add_student') }}">Add New Student</a></li>
+										<li><a href="{{ url_for('add_staff')}}">Add New Staff </a></li>
+									</ul>
+								</li>
+								{% endif %}
+
+
+								<li><a><i class="fa fa-money" aria-hidden="true"></i> Expenses <span
+											class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="#">Fee Collection</a></li>
+										<li><a href="#">Salary Distribution </a></li>
+										<li><a href="#">Fine Collection</a></li>
+									</ul>
+								</li>
+
+								<li><a><i class="fa fa-bus" aria-hidden="true"></i> Transport Setting <span
+											class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="#">Add New Transport</a></li>
+										<li><a href="#">Add New Route</a></li>
+										<li><a href="#">Transport List</a></li>
+										<li><a href="#">Route List</a></li>
+
+									</ul>
+								</li>
+
+
+								<li><a><i class="fa fa-table" aria-hidden="true"></i> Time Table <span
+											class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="{{ url_for('add_time_table') }}">Add Time Table</a></li>
+										<li><a href="{{ url_for('update_time_table') }}">Update Time Table</a></li>
+										<li><a href="#">Show Time List</a></li>
+
+									</ul>
+								</li>
+
+
+								<li><a href="{{ url_for('notice_board') }}"><i class="fa fa-sticky-note"
+											aria-hidden="true"></i>Add Notice</a>
+
+								<li><a href="#"><i class="fa fa-calendar-o"></i> Calender </a></li>
+								
+								{% if current_user.user_type == 'admin' %}
+								<li><a><i class="fa fa-cogs" aria-hidden="true"></i> Session Setting <span
+											class="fa fa-chevron-down"></span></a>
+									<!-- admin access -->
+
+									<ul class="nav child_menu">
+										<li><a href="{{ url_for('all_session') }}">Add Session</a></li>
+										<li><a href="{{ url_for('all_clases') }}"> Add Class </a></li>
+										<li><a href="{{ url_for('all_section') }}">Add Sections / Streams</a></li>
+										<li><a href="{{ url_for('map_clases')}}">Map Class and Section</a></li>
+										<li><a href="{{ url_for('all_subjects') }}">Add Subjects</a></li>
+										<li><a href="{{ url_for('map_subject') }}">Subjects and Class</a></li>
+										<li><a href="{{ url_for('map_subject_teacher' )}}">Subject and Teacher</a></li>
+										<li><a href="{{ url_for('map_teacher_class')}}">Teacher and Class</a></li>
+										<li><a href="{{ url_for('write_staff_using_excel') }}">Write By Excel</a></li>
+										<li><a href="{{ url_for('all_credentials')}}"></a>All Credentials</li>
+									</ul>
+
+								</li>
+								{% endif %}
+
+
+							</ul>
+						</div>
+
+
+					</div>
+					<!-- /sidebar menu -->
+				</div>
+			</div>
+
+			<!-- top navigation -->
+			<div class="top_nav">
+				<div class="nav_menu">
+					<div class="nav toggle">
+						<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+					</div>
+					<nav class="nav navbar-nav">
+						<ul class=" navbar-right">
+							<li class="nav-item dropdown open" style="padding-left: 15px;">
+								<a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
+									id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+									<img src="/static/images/img.jpg" alt=""> {{current_user.name}}
+								</a>
+								<div class="dropdown-menu dropdown-usermenu pull-right"
+									aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="javascript:;"> Profile</a>
+									<a class="dropdown-item" href="javascript:;">
+										<span class="badge bg-red pull-right">50%</span>
+										<span>Settings</span>
+									</a>
+									<a class="dropdown-item" href="javascript:;">Help</a>
+									<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out pull-right"></i>
+										Log Out</a>
+								</div>
+							</li>
+
+							<li role="presentation" class="nav-item dropdown open">
+								<a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
+									data-toggle="dropdown" aria-expanded="false">
+									<i class="fa fa-envelope-o"></i>
+									<span class="badge bg-green">6</span>
+								</a>
+								<ul class="dropdown-menu list-unstyled msg_list" role="menu"
+									aria-labelledby="navbarDropdown1">
+									<li class="nav-item">
+										<a class="dropdown-item">
+											<span class="image"><img src="/static/images/img.jpg"
+													alt="Profile Image" /></span>
+											<span>
+												<span>John Smith</span>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												Film festivals used to be do-or-die moments for movie makers. They were
+												where...
+											</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="dropdown-item">
+											<span class="image"><img src="/static/images/img.jpg"
+													alt="Profile Image" /></span>
+											<span>
+												<span>John Smith</span>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												Film festivals used to be do-or-die moments for movie makers. They were
+												where...
+											</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="dropdown-item">
+											<span class="image"><img src="/static/images/img.jpg"
+													alt="Profile Image" /></span>
+											<span>
+												<span>John Smith</span>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												Film festivals used to be do-or-die moments for movie makers. They were
+												where...
+											</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="dropdown-item">
+											<span class="image"><img src="/static/images/img.jpg"
+													alt="Profile Image" /></span>
+											<span>
+												<span>John Smith</span>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												Film festivals used to be do-or-die moments for movie makers. They were
+												where...
+											</span>
+										</a>
+									</li>
+									<li class="nav-item">
+										<div class="text-center">
+											<a class="dropdown-item">
+												<strong>See All Alerts</strong>
+												<i class="fa fa-angle-right"></i>
+											</a>
+										</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /top navigation -->
+
+			<!-- page content -->
+			<div class="right_col" role="main">
+
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+				<div class="alert alert alert-danger alert-dismissible fade show my-3" role="alert">
+					{% for message in messages %}
+					{{ message }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				{% endfor %}
+				{% endif %}
+
+				{% endwith %}
+
+				<div class="" id="main_content">
+
+
+					{% block body %}
+
+
+
+
+
+					{% endblock %}
+
+				</div>
+			</div>
+			<!-- /page content -->
+
+			<!-- footer content -->
+			<footer>
+				<div class="pull-right">
+					School Management Softwares | All Rights Reserved
+				</div>
+				<div class="clearfix"></div>
+			</footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="/static/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> -->
+	<script src="/static/vendors/popper/popper.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/static/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+	<!-- Custom Theme Scripts -->
+	<script src="/static/js/Custom/custom.js"></script>
+
+	<script src="/static/vendors/jquery/dist/jquery.dataTables.min.js"></script>
+	<script src="/static/vendors/bootstrap/dist/js/dataTables.bootstrap4.min.js"></script>
+
+</body>
+
+</html>

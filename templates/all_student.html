@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+
+<title>All Students | School Dashboard</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate action="{{ url_for('all_students') }}" method="get"
+                class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+
+                    <!-- <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" id="student_type" name="student_type">
+                                    <option value="regular">Regular Students</option>
+                                    <option value="new_admission">New Admission</option>
+                                    <option value="passed">Pass out Students</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" id="class_id" name="class_id">
+                                    <option value="">Choose Class</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" id="section_id" name="section_id">
+                                    <option value="">Section</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control" id="name" name="name" value="{{name}}"
+                                    placeholder="Student Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control" id="father_name" name="father_name" value="{{father_name}}"
+                                    placeholder="Father Name">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{mother_name}}"
+                                    placeholder="Mother Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control" id="admision_number" name="admision_number" value="{{admision_number}}"
+                                    placeholder="Admision Numebr">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control" id="aadhar_number" name="aadhar_number" value="{{aadhar_number}}"
+                                    placeholder="Aadhar Number">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" placeholder="phone_number" class="form-control" id="phone_number" value="{{phone_number}}"
+                                    name="phone_number">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2 col-sm-2">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" id="SearchButton" class="btn btn-primary"><i
+                                        class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action" id="example">
+                    <thead>
+                        <tr class="headings">
+                            <!-- <th class="column-title">S No. </th> -->
+                            <th class="column-title" id="sort_by_admision_number" style="cursor: pointer;"><i
+                                class="fa fa-sort-asc" aria-hidden="true"></i> Admision Number</th>
+                            <th class="column-title" id="sort_by_name" style="cursor: pointer;"><i
+                                    class="fa fa-sort-asc" aria-hidden="true"></i> Name </th>
+                            <th class="column-title" id="sort_by_father_name" style="cursor: pointer;"><i
+                                    class="fa fa-sort-asc" aria-hidden="true"></i> Father Name </th>
+                            <th class="column-title" id="sort_by_mother_name" style="cursor: pointer;"><i
+                                    class="fa fa-sort-asc" aria-hidden="true"></i> Mother Name</th>
+                            <th class="column-title" id="sort_by_class" style="cursor: pointer;"><i
+                                    class="fa fa-sort-asc" aria-hidden="true"></i> Class</th>
+                            <th class="column-title"> Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="detail_table_body">
+                        {% for student in students %}
+                        <tr class="pointer">
+                            <td>
+                                {{ student.admision_number }}
+                            </td>
+
+                            <td>
+                                {{ student.name}}
+                            </td>
+                            <td>
+                                {{ student.father_name}}
+                            </td>
+                            <td>
+                                {{ student.mother_name}}
+                            </td>
+
+                            <td>
+                                {{ student.class_in_year(running_session.session_year) }}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('student_detail', student_id=student.id ) }}"><i
+                                        class="fa fa-eye"></i> View</a>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<h1 id="max_count_box" style="display: none;">
+
+    {{ max_count }}
+</h1>
+
+<script type="module" src="/static/js/pages_script/all_students/main.js"></script>
+
+
+<script src="/static/vendors/jquery/dist/jquery-3.5.1.slim.min.js"></script>
+
+
+
+
+{% endblock %}

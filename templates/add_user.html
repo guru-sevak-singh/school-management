@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block head %}
+
+<title>Add User | School Dashboard</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Add User</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form action="{{ url_for('add_user', staff_id=staff.id) }}" method="post">
+                <!--  -->
+                <!--  -->
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="name">Name <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" class="form-control" id="name" name="name" readonly
+                                    value="{{ staff.name }}">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="designation">Designation
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" class="form-control" id="designation" name="designation" readonly
+                                    value="{{ staff.designation }}">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="login_id">Login Id
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-5 col-sm-5">
+                                <input type="text" required class="form-control" id="login_id" name="login_id" value="{{user.user_name}}">
+
+                            </div>
+                            <label class="col-form-label col-md-2 col-sm-2 label-align text-left"
+                                for="login_id">@sgdsd.com
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="password">Password
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="password" required class="form-control" id="password" name="password" value="{{user.password}}">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="user_type">User Type
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select type="user_type" required class="form-control" id="user_type" name="user_type">
+                                    <option value="teacher">Teacher</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <!-- <button class="btn btn-primary" type="button">Cancel</button> -->
+                                <button class="btn btn-primary" type="reset">Reset</button>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="item form-group">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

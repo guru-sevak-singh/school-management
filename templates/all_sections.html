@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block head %}
+
+<title>All Sections | School Dashboard</title>
+
+{% endblock %}
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Add Section And Stream</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate action="{{ url_for('add_section')}}" method="post"
+                class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="section_name"> Section / Stream Name
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+
+                                <input type="text" class="form-control" required id="section_name" name="section_name">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 col-sm-4">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" class="btn btn-success"> Add Section / Stream</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">S_no. </th>
+                            <th class="column-title">Section Name / Stream Name</th>
+                            <th class="column-title no-link last"><span class="nobr">Action</span>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if sections %}
+
+                        {% for section in sections %}
+                        <tr class="pointer">
+                            <td class="s_no">
+
+                            </td>
+                            <td>
+                                {{section.section_name}}
+                            </td>
+
+                            <td class=" last"><a href="{{ url_for ('delete_section', section_id=section.id) }}"><i
+                                        class="fa fa-trash success mr-2"></i>Delete</a>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    var s_no_columns = document.getElementsByClassName('s_no')
+    for (let n in s_no_columns) {
+        s_no_columns[n].innerText = Number(n) + 1;
+    }
+</script>
+
+
+
+
+{% endblock %}

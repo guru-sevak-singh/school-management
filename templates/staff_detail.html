@@ -1,0 +1,1046 @@
+{% extends 'base.html' %}
+{% block head %}
+
+<title>{{staff_member.name}} | School Dashboard</title>
+
+{% endblock %}
+{% block body %}
+
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Teacher Details </h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<!-- tabs start -->
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+
+                <div class="d-flex student-basic-details-wrapper row">
+
+                    <div class="student-image col-12 col-lg-2 col-md-2 mb-2">
+                        <div class="thumbnail">
+                            <div class="image view view-first">
+                                <img src="\static\images\user.png" alt="user-image" class="img">
+                                <!-- <img style="width: 100%; display: block;" src="images/media.jpg" alt="image"> -->
+                                <div class="mask">
+                                    <!-- <p>Your Text</p> -->
+                                    <div class="tools tools-bottom">
+                                        <!-- <a href="#"><i class="fa fa-link"></i></a> -->
+                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                        <!-- <a href="#"><i class="fa fa-times"></i></a> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="student-basic-details col-12 col-lg-6 col-md-6 mb-2">
+
+                        <table>
+                            <tr>
+                                <th class="pr-4">Name</th>
+                                <td>{{ staff_member.name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="pr-4">Gender</th>
+                                <td>{{ staff_member.gender }}</td>
+                            </tr>
+                            <tr>
+                                <th class="pr-4">Designation</th>
+                                <td> {{ staff_member.designation }} </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="edit-form-wrapper col-12 col-lg-4 col-md-4 mb-2">
+                        <button type="button" class="btn btn-success" data-toggle="modal"
+                            data-target="#bs-example-modal-lg"><i class="fa fa-edit mr-2"></i>Edit
+                            Form</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" style="display: none;"
+                            data-target="#send-whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i>
+                            WhatsApp
+                        </button>
+                    </div>
+                    <!-- edit Form popup code start -->
+                    <div class="modal fade " id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+                        style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Edit Student Details
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="x_content">
+                                                <br />
+                                                <form id="demo-form2" data-parsley-validate action="{{ url_for('update_staff_detail', staff_id=staff_member.id)}}" method="POST"
+                                                    class="form-horizontal form-label-left input_mask">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="name">Name
+                                                                    <span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="name" name="name"
+                                                                        value="{{ staff_member.name }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="gender">Gender<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required id="gender"
+                                                                        name="gender">
+                                                                        {% if staff_member.gender == 'Male' %}
+                                                                        <option>Male</option>
+                                                                        <option>Female</option>
+                                                                        {% else %}
+                                                                        <option>Female</option>
+                                                                        <option>Male</option>
+                                                                        {% endif %}
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="birth_date">Date Of Birth<span
+                                                                        class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="date" required name="birth_date"
+                                                                        class="form-control date-picker"
+                                                                        value="{{staff_member.birth_date}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="joining_date">Date Of Joining<span
+                                                                        class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="date" required name="joining_date"
+                                                                        class="form-control date-picker"
+                                                                        value="{{staff_member.joining_date}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="father_name">Father
+                                                                    Name<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="father_name" name="father_name"
+                                                                        value="{{ staff_member.father_name }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="mother_name">Mother
+                                                                    Name<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="mother_name" name="mother_name"
+                                                                        value="{{ staff_member.mother_name}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="phone_no">Primary
+                                                                    Phone<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" id="phone_no" name="phone_no"
+                                                                        class="form-control"
+                                                                        value="{{ staff_member.phone_number }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="secondary_mobile">Secondary
+                                                                    Phone<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" id="secondary_mobile"
+                                                                        name="secondary_mobile"
+                                                                        value="{{ staff_member.secondary_phone_number}}"
+                                                                        class="form-control">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="address">Address<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="address" class="form-control"
+                                                                        value="{{staff_member.address}}" id="address"
+                                                                        name="address">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="blood_group">Blood group
+                                                                    <span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required
+                                                                        id="blood_group" name="blood_group">
+                                                                        <option value="{{staff_member.blood_group}}">
+                                                                            {{staff_member.blood_group}}</option>
+                                                                        <option value="O+">O+</option>
+                                                                        <option value="A+">A+</option>
+                                                                        <option value="O-">O-</option>
+                                                                        <option value="A-">A-</option>
+                                                                        <option value="B+">B+</option>
+                                                                        <option value="B-">B-</option>
+                                                                        <option value="AB+">AB+</option>
+                                                                        <option value="AB-">AB-</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="social_category">Social Catogary<span
+                                                                        class="required">*</span>
+                                                                </label>
+
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required
+                                                                        id="social_category" name="social_category">
+                                                                        <option value="{{staff_member.social_category}}"
+                                                                            selected>
+                                                                            {{staff_member.social_category}}</option>
+                                                                        <option value="General">General</option>
+                                                                        <option value="SC">SC</option>
+                                                                        <option value="OBC">OBC</option>
+                                                                        <option value="BC-A">BC-A</option>
+                                                                        <option value="BC-B">BC-B</option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="aadhar_number">Aadhar
+                                                                    Number<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="aadhar_number" name="aadhar_number"
+                                                                        value="{{ staff_member.aadhar_number}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="pan_number">Pan
+                                                                    Number<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="pan_number" name="pan_number"
+                                                                        value="{{ staff_member.pan_number}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="basic_salary">Basic Salary<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="number" required class="form-control"
+                                                                        id="basic_salary" name="basic_salary" value="{{staff_member.basic_salary}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="bank_name">Bank Name<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="bank_name" name="bank_name" value="{{staff_member.bank_name}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="ifsc_code">IFSC Code<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="ifsc_code" name="ifsc_code" value="{{staff_member.ifsc_code}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="account_number">Account Number<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="account_number" name="account_number" value="{{staff_member.account_number}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="experience">Experience<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="number" required class="form-control"
+                                                                        id="experience" name="experience" value="{{staff_member.experience}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ln_solid"></div>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" type="reset">Reset</button>
+                                                            <button type="submit"
+                                                                class="btn btn-success">Submit</button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- edit form popup end -->
+
+                    <!-- send WhatsApp popup code start -->
+                    <div class="modal fade " id="send-whatsapp" tabindex="-1" role="dialog" aria-hidden="true"
+                        style="display: none;">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Send Whatspp</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="x_content">
+                                                <br />
+                                                <form id="demo-form2" data-parsley-validate
+                                                    class="form-horizontal form-label-left input_mask">
+                                                    <div class="row">
+
+
+                                                        <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="template">Template<span
+                                                                        class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required id="template"
+                                                                        name="template">
+                                                                        <option>Choose option
+                                                                        </option>
+                                                                        <option>Sever Up</option>
+                                                                        <option>2.3 Update</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="template">Template
+                                                                    content<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <textarea class="form-control" name="comment" id=""
+                                                                        rows="5"></textarea>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="ln_solid"></div>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" type="reset">Reset</button>
+                                                            <button type="button" class="btn btn-success"
+                                                                data-toggle="modal" data-target="#send-whatsapp"><i
+                                                                    class="fa fa-whatsapp" aria-hidden="true"></i>
+                                                                Send WhatsApp
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- send WhatsApp popup code end -->
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <!-- student detail tabs code start -->
+                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="basic-details-tab" data-toggle="tab" href="#basic-details"
+                            role="tab" aria-controls="basic-details" aria-selected="true">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="payments-tab" data-toggle="tab" href="#payments" role="tab"
+                            aria-controls="payments" aria-selected="false">Salary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="attendence-tab" data-toggle="tab" href="#attendence" role="tab"
+                            aria-controls="attendence" aria-selected="false">Attendence</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="time-table-tab" data-toggle="tab" href="#time-table" role="tab"
+                            aria-controls="time-table" aria-selected="false">Time Table</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="document-tab" data-toggle="tab" href="#document" role="tab"
+                            aria-controls="document" aria-selected="false">Document</a>
+                    </li>
+                </ul>
+                <!-- detail tabs code end -->
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="basic-details" role="tabpanel"
+                        aria-labelledby="basic-details-tab">
+                        <div class="student-details row">
+                            <div class="col-lg-4 col-12 col-md-4">
+                                <table>
+                                    <tr>
+                                        <th class="pr-4">Father Name</th>
+                                        <td>{{ staff_member.father_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Subject Specialist</th>
+                                        <td>{{ staff_member.subject }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Joining Date</th>
+                                        <td>{{ staff_member.JoiningDate() }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Salary</th>
+                                        <td> {{ staff_member.basic_salary }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Total Salary Given</th>
+                                        <td># 5000 #</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Last Salary Date</th>
+                                        <td># last salary date #</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Bank Name</th>
+                                        <td>{{ staff_member.bank_name }}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <div class="col-lg-4 col-12 col-md-4">
+                                <table>
+
+                                    <tr>
+                                        <th class="pr-4">Mother Name</th>
+                                        <td>{{ staff_member.mother_name }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Primary Mobile</th>
+                                        <td>{{ staff_member.phone_number }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Birth Date</th>
+                                        <td>{{ staff_member.BirthDate() }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Aadhar Number</th>
+                                        <td>{{ staff_member.aadhar_number}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">PAN Number</th>
+                                        <td>{{ staff_member.pan_number }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Account Number</th>
+                                        <td>{{ staff_member.account_number }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">IFSC Code</th>
+                                        <td>{{ staff_member.ifsc_code }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-lg-4 col-12 col-md-4">
+                                <table>
+                                    <tr>
+                                        <th class="pr-4">Qualification</th>
+                                        <td>{{ staff_member.qualification }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Secondary Mobile</th>
+                                        <td>{{ staff_member.secondary_phone_number }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Address</th>
+                                        <td>{{ staff_member.address }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">PF</th>
+                                        <td>{{ staff_member.pf }} %</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">TAX</th>
+                                        <td> {{ staff_member.tax }} % </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Blood Group</th>
+                                        <td>{{ staff_member.blood_group }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Social Catogary</th>
+                                        <td>{{ staff_member.social_category }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Experience</th>
+                                        <td>{{ staff_member.experience }} Years</td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="clearfix">
+                            <hr>
+                        </div>
+                        <!-- buttons section -->
+                        <div class="col-12 col-lg-12 col-md-12 mb-2 text-right float-right mt-3">
+                            <button type="button" class="btn btn btn-secondary" data-toggle="modal"
+                                style="display: none;" data-target="#delete-user"><i class="fa fa-trash mr-2"></i>Delete
+                                User</button>
+                            {% if current_user.user_type == 'admin' %}
+
+                            <a href="{{ url_for('add_user', staff_id=staff_member.id)}}" class="btn btn-primary">Add
+                                Credentials</a>
+
+                            {% endif %}
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#add-comment"><i class="fa fa-comment mr-2"></i>Add
+                                Comment</button>
+
+                        </div>
+
+                        <!-- Add Comment popup -->
+                        <div class="modal fade " id="add-comment" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display: none;">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Add Comment</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="x_content">
+                                                    <br />
+                                                    <form id="demo-form2" data-parsley-validate
+                                                        class="form-horizontal form-label-left input_mask">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                                                <div class="item form-group">
+                                                                    <textarea class="form-control" name="comment" id=""
+                                                                        rows="5"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="ln_solid"></div>
+                                                        <div class="item form-group">
+                                                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary"
+                                                                    type="reset">Reset</button>
+                                                                <button type="submit" class="btn btn-success">Add
+                                                                    Comment</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                    <h5 class="mb-3">Comments</h5>
+                                                    <!-- chat bubble -->
+                                                    <div class="chatcontainer shadow-sm rounded">
+                                                        <img src="images/img.jpg" alt="Avatar">
+                                                        <h6 class="mb-0 font-weight-bold mt-2">Guru
+                                                            Sevak Singh</h6>
+                                                        <div
+                                                            class="mt-1 mb-1 d-flex align-items-center justify-content-between">
+                                                            <p class="float-left mb-0">Hello. How
+                                                                are you today?</p>
+                                                            <small class="float-right small text-right">2023-03-23
+                                                                11:33:02 </small>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <!-- chat bubble -->
+                                                    <!-- chat bubble -->
+                                                    <div class="chatcontainer shadow-sm rounded">
+                                                        <img src="images/img.jpg" alt="Avatar">
+                                                        <h6 class="mb-0 font-weight-bold mt-2">Guru
+                                                            Sevak Singh</h6>
+                                                        <div
+                                                            class="mt-1 mb-1 d-flex align-items-center justify-content-between">
+                                                            <p class="float-left mb-0">Hello. How
+                                                                are you today?</p>
+                                                            <small class="float-right small text-right">2023-03-23
+                                                                11:33:02 </small>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <!-- chat bubble -->
+                                                    <!-- chat bubble -->
+                                                    <div class="chatcontainer shadow-sm rounded">
+                                                        <img src="images/img.jpg" alt="Avatar">
+                                                        <h6 class="mb-0 font-weight-bold mt-2">Guru
+                                                            Sevak Singh</h6>
+                                                        <div
+                                                            class="mt-1 mb-1 d-flex align-items-center justify-content-between">
+                                                            <p class="float-left mb-0">Hello. How
+                                                                are you today?</p>
+                                                            <small class="float-right small text-right">2023-03-23
+                                                                11:33:02 </small>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <!-- chat bubble -->
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Add Comment popup -->
+                        <!-- Add Comment popup -->
+                        <div class="modal fade " id="delete-user" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display: none;">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Delete user</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="x_content">
+
+                                                    <h6>
+                                                        <span>
+                                                            Please note once you delete the user,
+                                                            You won't be able to see their details
+                                                            again.
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span class="pt-3">
+                                                            Do You still Want to Delete this user?
+                                                        </span>
+                                                    </h6>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                            <button class="btn btn-primary" type="reset">Delete</button>
+                                                            <button type="submit"
+                                                                class="btn btn-success">Cancel</button>
+                                                        </div>
+                                                    </div>
+
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Add Comment popup -->
+                        <!-- end buttons section -->
+                    </div>
+
+                    <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+                        <!-- Payment table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Date </th>
+                                        <th class="column-title">Amount</th>
+                                        <th class="column-title">Fee Type</th>
+                                        <th class="column-title">Discount </th>
+                                        <th class="column-title">Discount Type</th>
+                                        <th class="column-title">Payment Method</th>
+                                        <th class="column-title">Reference</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="salary_tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Payment table end -->
+                    </div>
+                    <div class="tab-pane fade" id="attendence" role="tabpanel" aria-labelledby="attendence-tab">
+
+                        <div class="x_content">
+                            <br />
+                            <div id="demo-form2" data-parsley-validate
+                                class="form-horizontal form-label-left input_mask">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-5 col-sm-5 label-align"
+                                                for="attendence_date"> Attendence Month
+                                                <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-7 col-sm-7">
+
+                                                <input class="form-control" type="month" required id="attendence_date"
+                                                    name="attendence_date">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="item form-group">
+                                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                <button type="button" id="attendence_button" class="btn btn-primary">
+                                                    Get Attendence</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="ln_solid"></div>
+
+                            </div>
+                        </div>
+
+                        <!-- attendence table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Sr No. </th>
+                                        <th class="column-title">Date</th>
+                                        <th class="column-title">Day</th>
+                                        <th class="column-title text-center">Attendence Detail</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="attendence_table_body">
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- attendence table end -->
+
+
+
+                    </div>
+
+                    <div class="tab-pane fade" id="time-table" role="tabpanel" aria-labelledby="time-table-tab"></div>
+
+                    <div class="tab-pane fade" id="document" role="tabpanel" aria-labelledby="document-tab">
+
+                        <!-- document upload button -->
+                        <div class="col-12 col-lg-12 col-md-12 mb-2 text-right float-right">
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#document-upload"><i class="fa fa-upload mr-2"></i>Upload Document</button>
+                        </div>
+                        <!-- document upload button -->
+                        <!-- Document popup -->
+                        <div class="modal fade " id="document-upload" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Upload Document
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="x_content">
+                                                    <br />
+                                                    <form id="demo-form2" data-parsley-validate
+                                                        action="{{ url_for('save_staff_document', staff_id=staff_member.id)}}"
+                                                        enctype="multipart/form-data" method="post"
+                                                        class="form-horizontal form-label-left input_mask">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                                <div class="item form-group">
+                                                                    <label
+                                                                        class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                        for="document_name">Document
+                                                                        Name <span class="required">*</span>
+                                                                    </label>
+                                                                    <div class="col-md-7 col-sm-7">
+                                                                        <input type="text" required class="form-control"
+                                                                            id="document_name" name="document_name">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                                <div class="item form-group">
+                                                                    <label
+                                                                        class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                        for="document_file">Document
+                                                                        File<span class="required">*</span>
+                                                                    </label>
+                                                                    <div class="col-md-7 col-sm-7">
+                                                                        <input type="file" required class="form-control"
+                                                                            id="document_file" name="document_file">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="ln_solid"></div>
+                                                        <div class="item form-group">
+                                                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary"
+                                                                    type="reset">Reset</button>
+                                                                <button type="submit" class="btn btn-success">Upload
+                                                                    Document</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- document popup end -->
+                        <!-- Document table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Sr. No.</th>
+                                        <th class="column-title">Document Name</th>
+                                        <th class="column-title">Uploaded Date</th>
+                                        <th class="column-title text-center" colspan="2">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="document_tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Document table end -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h1 id="staff_id" style="display: none;">{{staff_member.id}}</h1>
+
+<script type="module" src="/static/js/pages_script/staff_detail/main.js"></script>
+
+<!-- tabs end -->
+
+
+
+
+{% endblock %}

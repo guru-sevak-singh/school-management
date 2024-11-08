@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+
+<title>Show Exam | School Dashboard</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate action="{{ url_for('show_exam') }}" method="get"
+                class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" id="class_id" name="class_id" required>
+                                    <option value="">Choose Class</option>
+                                    {% for clas in all_classes %}
+                                    <option value="{{clas.id}}">{{ clas.class_name }}</option>
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" id="section_id" name="section_id" required>
+                                    <option value="">Section</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" id="subject" name="subject" required>
+                                    <option value="">Subject</option>
+                                    {% for subject in all_subjects %}
+                                    <option value="{{subject.subject_name}}">{{subject.subject_name}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <input class="form-control" id="test_name" name="test_name"
+                                    placeholder="Enter Exam Name">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2 col-sm-2">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" id="SearchButton" class="btn btn-primary"><i
+                                        class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action" id="example">
+                    <thead>
+                        <tr class="headings">
+                            <!-- <th class="column-title">S No. </th> -->
+                            <th class="column-title">
+                                Roll No
+                            </th>
+                            <th class="column-title">
+                                Name
+                            </th>
+                            <th class="column-title">
+                                Subject Name
+                            </th>
+                            <th class="column-title">Marks (obtain)</th>
+                            <th class="column-title">Max Marks</th>
+                            <th class="column-title">Class</th>
+                            <th class="column-title"> Exam Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="detail_table_body">
+                        {% for result_detail in result %}
+                        <tr class="pointer">
+                            <td>{{result_detail.student.roll_no(result_detail.running_classes.running_class_unique_id)}}
+                            </td>
+                            <td>{{result_detail.student.name}}</td>
+                            <td>{{result_detail.subject}}</td>
+                            <td>{{result_detail.marks_obtained}}</td>
+                            <td>{{result_detail.max_marks}}</td>
+                            <td>{{result_detail.running_classes.class_name()}}</td>
+                            <td>{{result_detail.exam_date.strftime("%d-%b-%Y")}}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script type="module" src="/static/js/pages_script/show_exam/show_exam.js"></script>
+
+
+
+{% endblock %}

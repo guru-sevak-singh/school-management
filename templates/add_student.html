@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% block head %}
+
+<title>Add Student | School Dashboard</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Add Student</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form action="{{ url_for('add_student') }}" method="post">
+                <!--  -->
+                <!--  -->
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="name">Name <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" required class="form-control" id="name" name="name">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="father_name">Father Name
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" required class="form-control" id="father_name" name="father_name">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="mother_name">Mother Name
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" required class="form-control" id="mother_name" name="mother_name">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="admision_number">Admision
+                                Number <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" required class="form-control" id="admision_number"
+                                    name="admision_number">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="phone_number">Phone Number
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" required class="form-control" id="phone_number" name="phone_number">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align"
+                                for="secondary_phone_number">Secondary Phone Number <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" class="form-control" id="secondary_phone_number"
+                                    name="secondary_phone_number">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="birth_date">Date Of Birth
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="date" required class="form-control" id="birth_date" name="birth_date">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="admision_date">Admision
+                                Date <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="date" required class="form-control" id="admision_date" name="admision_date"
+                                    value="{{current_date}}">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="gender">Gender <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="gender" name="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="blood_group">Blood group
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="blood_group" name="blood_group">
+
+                                    <option value="O+">O+</option>
+                                    <option value="A+">A+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="social_category">Social
+                                Category <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="social_category" name="social_category">
+                                    <option value="General">General</option>
+                                    <option value="SC">SC</option>
+                                    <option value="OBC">OBC</option>
+                                    <option value="BC-A">BC-A</option>
+                                    <option value="BC-B">BC-B</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="aadhar_number">Aadhar
+                                Number <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" required class="form-control" id="aadhar_number"
+                                    name="aadhar_number">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="standared">Class
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="standared" name="standared">
+                                    {% for clas in clases %}
+                                    <option value="{{clas.id}}">{{clas.class_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="section">Section
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="section" name="section">
+                                    {% for section in sections %}
+                                    <option value="{{sectino.id}}">{{section.section_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="address"> 
+                                Address
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="text" required class="form-control" id="address"
+                                    name="address">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="item form-group">
+                    <div class="col-md-12 col-sm-12 text-right pull-right">
+                        <button class="btn btn-primary" type="button">Cancel</button>
+                        <button class="btn btn-primary" type="reset">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- <script src="/static/js/add_student.js"></script> -->
+<script type="module" src="/static/js/pages_script/add_student/add_student.js"></script>
+
+
+{% endblock %}

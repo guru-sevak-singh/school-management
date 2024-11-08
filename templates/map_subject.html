@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block head %}
+
+    <title>Map Subjects | School Dashboard</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Map Subjects With Class</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate action="{{ url_for('map_subject')}}" method="post"
+                class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="session_year"> Session
+                                Year<span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="session_year" name="session_year">
+                                    {% for session in sessions %}
+                                        <option value="{{session.session_year}}">{{session.session_name}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="class_id"> Class
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="class_id" name="class_id">
+                                    {% for clas in clases %}
+                                        <option value="{{clas.id}}">{{clas.class_name}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="section"> Section
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="section" name="section">
+                                    {% for section in sections %}
+                                        <option value="{{section.id}}">{{section.section_name}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="subject"> Subject
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="subject" name="subject">
+                                    {% for subject in subjects %}
+                                        <option value="{{subject.id}}">{{subject.subject_name}}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 col-sm-4">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" class="btn btn-success">Map Subject</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">S No. </th>
+                            <th class="column-title">Class</th>
+                            <th class="column-title">Subjects</th>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        
+                        {% if running_session %}
+
+                        {% for class in running_session.main_classes %}
+                        <tr class="pointer">
+                            <td class="s_no">
+
+                            </td>
+                            <td>
+                                {{ class.class_name()}}
+                            </td>
+                            <td>
+                                {% for subject in class.subjects %}
+                                    {{ subject.subject_name }}, 
+                                {% endfor %}
+                              
+                            </td>
+
+
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    var s_no_columns = document.getElementsByClassName('s_no')
+    for (let n in s_no_columns) {
+        s_no_columns[n].innerText = Number(n) + 1;
+    }
+</script>
+
+<script type="module" src="/static/js/pages_script/map_subject/map_subject.js"></script>
+
+
+{% endblock %}

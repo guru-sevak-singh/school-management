@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>
+        All Staff | School Dashboard
+    </title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>All Staff</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate action="{{ url_for('staf_list')}}" method="get"
+                class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <input class="form-control" id="name" name="name" placeholder="Name" value="{{ name }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" name="current_staff" id="current_staff" name="current_staff">
+                                    {% if staff_active_status %}
+                                    <option value="Current Staff">Current Staff</option>
+                                    <option value="Old Staff">Old Staff</option>
+                                    {% else %}
+                                    <option value="Old Staff">Old Staff</option>
+                                    <option value="Current Staff">Current Staff</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+
+                                <select class="form-control" id="staff_type" name="staff_type">
+                                    {% if staff_teaching_status == true %}
+                                        <option value="true">Teacherin Staff</option>
+                                        <option value="false">Non-Teaching Staff</option>
+                                        <option value="">All Staff</option>
+                                    {% elif staff_teaching_status == "" %}
+                                        <option value="">All Staff</option>
+                                        <option value="true">Teacherin Staff</option>
+                                        <option value="false">Non-Teaching Staff</option>
+                                    {% else %}
+                                        <option value="false">Non-Teaching Staff</option>
+                                        <option value="true">Teacherin Staff</option>
+                                        <option value="">All Staff</option>
+                                    {% endif %}
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number" value="{{ phone_number }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control"  id="aadhar_number" name="aadhar_number" placeholder="Aadhar Number" value="{{ aadhar_number }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control"  id="pan_number" name="pan_number" placeholder="PAN Number" value="{{ pan_number }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control"  id="designation" name="designation" placeholder="Designation" value="{{ designation }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Search </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+
+            <h1 id="min_id" style="display: none;">{{min_id}}</h1>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action" id="example">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">s_no </th>
+                            <th class="column-title">Name</th>
+                            <th class="column-title">Father Name</th>
+                            <th class="column-title">Designation</th>
+
+                            <th class="column-title no-link last"><span class="nobr">Action</span>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        
+                        {% for staff_member in all_staff %}
+                        <tr class="pointer">
+                            <td class="s_no">
+                                
+                            </td>
+                            <td>
+                                {{ staff_member.name }}
+                            </td>
+                            <td>
+                                {{ staff_member.father_name }}
+                            </td>
+                            <td>
+                                {{ staff_member.designation }}
+                            </td>
+                            
+                            <td class=" last"><a href="{{ url_for('staff_detail', staff_id=staff_member.id) }}"><i
+                                        class="fa fa-eye success mr-2"></i>View</a>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+        </div>
+
+
+    </div>
+
+
+</div>
+<!-- <script>
+    var s_no_columns = document.getElementsByClassName('s_no')
+    for (let n in s_no_columns) {
+        s_no_columns[n].innerText = Number(n) + 1;
+    }
+</script> -->
+
+<script type="module" src="/static/js/pages_script/all_staff/all_staff.js"></script>
+
+
+{% endblock %}

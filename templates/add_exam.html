@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>
+    Add Exam | School Dashboard
+</title>
+
+{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="x_content" action="{{ url_for('add_exam')}}" method="post">
+            <br />
+            <div id="demo-form2" data-parsley-validate
+                class="form-horizontal form-label-left input_mask">
+                <div class="row" id="detail_form">
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            
+                            <div class="col-md-12 col-sm-12">
+
+                                <input type="date" class="form-control" id="exam_date" name="exam_date" value="{{ current_date }}" required>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+
+                                <input type="number" class="form-control" id="max_marks" name="max_marks" required placeholder="Maximum Marks">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            
+                            <div class="col-md-12 col-sm-12">
+
+                                <input type="text" class="form-control" id="exam_name" name="exam_name" required placeholder="Enter Exam Name">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            
+                            <div class="col-md-12 col-sm-12">
+
+                                <select class="form-control" id="class_id" name="class_id" required>
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            
+                            <div class="col-md-12 col-sm-12">
+
+                                <select class="form-control" id="section_id" name="section_id" required>
+                                    <option value="">Section</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group has-feedback">
+                        <div class="item form-group">
+                            
+                            <div class="col-md-12 col-sm-12">
+
+                                <select class="form-control" id="subject" name="subject" required>
+                                    <option value="">Subject</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </div>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Roll No.</th>
+                            <th class="column-title">Name </th>
+                            <!-- <th class="column-title">Attendence</th> -->
+                            <th class="column-title">Marks Obtained</th>
+                            <th class="column-title">Max Marks</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody">
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+            <div id="submit_button_area"></div>
+
+            
+        </form>
+
+
+    </div>
+
+</div>
+
+<script type="module" src="/static/js/pages_script/add_exam/add_exam.js"></script>
+
+{% endblock %}

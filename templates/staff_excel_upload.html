@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<title>Upload Uing Excel</title>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<form id="demo-form2" data-parsley-validate action="{{ url_for('write_students_using_excel') }}" method="post" enctype="multipart/form-data"
+    class="form-horizontal form-label-left input_mask" style="border: 2px solid black; padding: 5%; margin: 5% 0;">
+    <div class="row">
+
+
+        <div class="form-group col-md-12 col-sm-12">
+            <label class="col-form-label col-md-5 col-sm-5 label-align text-left" for="student_excel_sheet"> Student Excel Sheet<span
+                    class="required">*</span>
+            </label>
+
+            <input class="form-control" required type="file" name="student_excel_sheet" rows="5"></input>
+        </div>
+
+        <div class="col-md-12 col-sm-12">
+            <div class="item form-group">
+                <div class="col-md-12 col-sm-12 text-right pull-right">
+                    <button type="submit" class="btn btn-success">Upload Sheet</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</form>
+
+
+
+
+<form id="demo-form2" data-parsley-validate action="{{ url_for('write_staff_using_excel') }}" method="post" style="border: 2px solid black; padding: 5%; margin: 5% 0;"
+    class="form-horizontal form-label-left input_mask" enctype="multipart/form-data">
+    <div class="row">
+
+
+        <div class="form-group col-md-12 col-sm-12">
+            <label class="col-form-label col-md-5 col-sm-5 label-align text-left" for="staff_excel_sheet"> Staff Excel Sheet<span
+                    class="required">*</span>
+            </label>
+
+            <input type="file" required class="form-control" name="staff_excel_sheet" rows="5"></input>
+        </div>
+
+        <div class="col-md-12 col-sm-12">
+            <div class="item form-group">
+                <div class="col-md-12 col-sm-12 text-right pull-right">
+                    <button type="submit" class="btn btn-success">Upload File</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</form>
+
+    {% endblock %}

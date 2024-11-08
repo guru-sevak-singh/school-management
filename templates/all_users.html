@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block head %}
+
+<title>All Users | School Dashboard</title>
+
+{% endblock %}
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>All Users</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">S_no. </th>
+                            <th class="column-title">Name</th>
+                            <th class="column-title">Login Id</th>
+                            <th class="column-title">Password</th>
+                            <th class="column-title">User Type</th>
+                            <th class="column-title">Last Login</th>
+                            <th class="column-title no-link last"><span class="nobr">Action</span>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for user in all_users %}
+                        <tr class="pointer">
+                            <td class="s_no"></td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.login_id}}</td>
+                            <td>{{user.password}}</td>
+                            <td>{{user.user_type}}</td>
+                            {% if user.last_login != None %}
+                            <td>{{user.last_login.strftime("%d-%b-%Y %I:%M %p")}}</td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+                            <td><a href="{{url_for('delete_user', user_id=user.id)}}">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    var s_no_columns = document.getElementsByClassName('s_no')
+    for (let n in s_no_columns) {
+        s_no_columns[n].innerText = Number(n) + 1;
+    }
+</script>
+
+
+
+
+{% endblock %}

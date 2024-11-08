@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <title>Add Attendence | School System</title>
+
+{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="x_content" action="{{ url_for('add_attendence')}}" method="post">
+            <br />
+            <div id="demo-form2" data-parsley-validate
+                class="form-horizontal form-label-left input_mask">
+                <div class="row" id="detail_form">
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="attendence_date"> Date
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+
+                                <input type="date" class="form-control" id="attendence_date" name="attendence_date" value="{{ current_date }}" readonly>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </div>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Roll Number </th>
+                            <th class="column-title">Name </th>
+                            <th class="column-title">Father Name </th>
+                            <th class="column-title no-link last" colspan="3"><span class="nobr">Attendence</span>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+
+            
+        </form>
+
+
+    </div>
+
+</div>
+
+<script type="module" src="/static/js/pages_script/attendence/add_attendence.js"></script>
+
+{% endblock %}

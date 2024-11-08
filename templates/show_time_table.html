@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>Time Table | School Dashboard</title>
+<style>
+    .active {
+        position: relative;
+        z-index: 10;
+        transition: all 0.3s linear 0s;
+        min-width: 165px;
+    }
+
+
+    .active::before {
+        position: absolute;
+        content: "";
+        min-width: 100%;
+        min-height: 100%;
+        transform: scale(0);
+        top: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 0.25rem;
+        transition: all 0.3s linear 0s;
+    }
+
+    .active:hover {
+        transform: scale(1.2);
+        /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Time Table</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <div id="demo-form2" class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="day"> Day
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="day" name="day">
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday ">Thursday </option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </div>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="headings">
+                            <th scope="col" style="text-align: center;" class="bg-info">Day </th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 1</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 2</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 3</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 4</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Reces</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 5</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 6</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 7</th>
+                            <th scope="col" style="text-align: center;" class="bg-info">Period 8</th>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr class="pointer">
+                            <th scope="row" style="text-align: center ; height: 10vh">Monday </th>
+                            <td class="active btn bg-info text-white">
+                                <h4>English</h4>
+                                <p>(Anjana)</p>
+                            </td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                        </tr>
+
+                        <tr class="pointer">
+                            <th scope="row" style="text-align: center; height: 10vh;">Tuesday </th>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                        </tr>
+
+                        <tr class="pointer">
+                            <th scope="row" style="text-align: center; height: 10vh;">Wednesday </th>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                        </tr>
+
+                        <tr class="pointer">
+                            <th scope="row" style="text-align: center; height: 10vh;">ThrusDay </th>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                            <td class="active"></td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

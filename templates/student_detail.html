@@ -1,0 +1,1135 @@
+{% extends 'base.html' %}
+{% block head %}
+
+<title>{{student.name}} | School Dashboard</title>
+
+{% endblock %}
+{% block body %}
+
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Student Details </h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<!-- tabs start -->
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+
+                <div class="d-flex student-basic-details-wrapper row">
+
+                    <div class="student-image col-12 col-lg-2 col-md-2 mb-2">
+                        <div class="thumbnail">
+                            <div class="image view view-first">
+                                <img src="\static\images\user.png" alt="user-image" class="img">
+                                <!-- <img style="width: 100%; display: block;" src="images/media.jpg" alt="image"> -->
+                                <div class="mask">
+                                    <!-- <p>Your Text</p> -->
+                                    <div class="tools tools-bottom">
+                                        <!-- <a href="#"><i class="fa fa-link"></i></a> -->
+                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                        <!-- <a href="#"><i class="fa fa-times"></i></a> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="student-basic-details col-12 col-lg-6 col-md-6 mb-2">
+
+                        <table>
+                            <tr>
+                                <th class="pr-4">Name</th>
+                                <td>{{student.name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="pr-4">Gender</th>
+                                <td>{{student.gender}}</td>
+                            </tr>
+                            <tr>
+                                <th class="pr-4">Class</th>
+                                <td>{{ last_class.class_name() }}</td>
+                            </tr>
+                            <tr>
+                                <th class="pr-4">Roll No</th>
+                                <td>{{ student.roll_no(last_class.running_class_unique_id) }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="edit-form-wrapper col-12 col-lg-4 col-md-4 mb-2">
+                        <button type="button" class="btn btn-success" data-toggle="modal" id="editButton"
+                            data-target="#bs-example-modal-lg"><i class="fa fa-edit mr-2"></i>Edit
+                            Form</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" style="display: none;"
+                            data-target="#send-whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i>
+                            WhatsApp
+                        </button>
+                    </div>
+                    <!-- edit Form popup code start -->
+                    <div class="modal fade " id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+                        style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Edit Student Details
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="x_content">
+                                                <br />
+                                                <form id="demo-form2" data-parsley-validate
+                                                    action="{{ url_for('update_student_profile', student_id=student.id)}}"
+                                                    method="post" class="form-horizontal form-label-left input_mask">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="name">Name
+                                                                    <span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="name" name="name" autocomplete="off"
+                                                                        value="{{ student.name }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="gender">Gender<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required id="gender"
+                                                                        name="gender">
+                                                                        {% if student.gender == 'Male'%}
+                                                                        <option>Male</option>
+                                                                        <option>Female</option>
+                                                                        {% else %}
+                                                                        <option>Female</option>
+                                                                        <option>Male</option>
+                                                                        {% endif %}
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="birth_date">Date Of Birth<span
+                                                                        class="required">*</span>
+                                                                </label>
+                                                                {% if student.birth_date == None %}
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="date" required name="birth_date"
+                                                                        id="birth_date"
+                                                                        class="form-control date-picker">
+
+                                                                </div>
+                                                                {% else %}
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="date" required name="birth_date"
+                                                                        class="form-control date-picker"
+                                                                        value="{{ student.birth_date }}">
+
+                                                                </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="admision_date">Admission
+                                                                    Date<span class="required">*</span>
+                                                                </label>
+                                                                {% if student.admision_date == None %}
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="date" required class="form-control"
+                                                                        id="admision_date" name="admision_date">
+
+                                                                </div>
+                                                                {% else %}
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="date" required class="form-control"
+                                                                        id="admision_date" name="admision_date"
+                                                                        value="{{ student.admision_date }}">
+
+                                                                </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="admision_number">Admission
+                                                                    Number<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="number" required class="form-control"
+                                                                        id="admision_number" name="admision_number"
+                                                                        value="{{ student.admision_number }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="father_name">Father
+                                                                    Name<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="father_name" name="father_name"
+                                                                        autocomplete="off"
+                                                                        value="{{ student.father_name }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="mother_name">Mother
+                                                                    Name<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="mother_name" name="mother_name"
+                                                                        value="{{ student.mother_name }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="phone_no">Primary
+                                                                    Phone<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" id="phone_no" name="phone_no"
+                                                                        required class="form-control"
+                                                                        value="{{ student.phone_number }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="secondary_mobile">Secondary
+                                                                    Phone<span class="required">*</span>
+                                                                </label>
+                                                                {% if student.secondary_phone_number == None %}
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="tel" id="secondary_mobile"
+                                                                        name="secondary_mobile" value=""
+                                                                        class="form-control">
+
+                                                                </div>
+                                                                {% else %}
+
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="tel" id="secondary_mobile"
+                                                                        name="secondary_mobile"
+                                                                        value="{{ student.secondary_phone_number}}"
+                                                                        class="form-control">
+
+                                                                </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="address">Address<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="address" class="form-control"
+                                                                        id="address" name="address" autocomplete="on"
+                                                                        value="{{student.address}}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="blood_group">Blood group
+                                                                    <span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required
+                                                                        id="blood_group" name="blood_group">
+                                                                        <option value="{{student.blood_group}}">
+                                                                            {{student.blood_group}}</option>
+                                                                        <option value="O+">O+</option>
+                                                                        <option value="A+">A+</option>
+                                                                        <option value="O-">O-</option>
+                                                                        <option value="A-">A-</option>
+                                                                        <option value="B+">B+</option>
+                                                                        <option value="B-">B-</option>
+                                                                        <option value="AB+">AB+</option>
+                                                                        <option value="AB-">AB-</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="social_catogary">Social Catogary<span
+                                                                        class="required">*</span>
+                                                                </label>
+
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required
+                                                                        id="social_catogary" name="social_catogry">
+                                                                        <option value="{{student.social_category}}" selected>
+                                                                            {{student.social_category}}</option>
+                                                                        <option value="General">General</option>
+                                                                        <option value="SC">SC</option>
+                                                                        <option value="OBC">OBC</option>
+                                                                        <option value="BC-A">BC-A</option>
+                                                                        <option value="BC-B">BC-B</option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="social_catogary">Class<span
+                                                                        class="required">*</span>
+                                                                </label>
+
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required
+                                                                        id="current_class" name="current_class">
+                                                                        <option
+                                                                            value="{{student.get_last_class().standared.id}}">
+                                                                            {{student.get_last_class().standared.class_name}}
+                                                                        </option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="social_catogary">Section<span
+                                                                        class="required">*</span>
+                                                                </label>
+
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required
+                                                                        id="current_section" name="current_section">
+                                                                        <option
+                                                                            value="{{student.get_last_class().section.id}}">
+                                                                            {{student.get_last_class().section.section_name}}
+                                                                        </option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="student_type">Student
+                                                                    Type<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select name="student_type" class="form-control"
+                                                                        id="student_type" name="student_type">
+                                                                        <option>Choose option
+                                                                        </option>
+                                                                        <option value="134 A">134 A
+                                                                            student</option>
+                                                                        <option value="normal">
+                                                                            Normal</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="aadhar_no">Aadhar
+                                                                    Number<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <input type="text" required class="form-control"
+                                                                        id="aadhar_no" name="aadhar_no"
+                                                                        value="{{ student.aadhar_number }}">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="ln_solid"></div>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" type="reset">Reset</button>
+                                                            <button type="submit"
+                                                                class="btn btn-success">Submit</button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- edit form popup end -->
+
+                    <!-- send WhatsApp popup code start -->
+                    <div class="modal fade " id="send-whatsapp" tabindex="-1" role="dialog" aria-hidden="true"
+                        style="display: none;">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Send Whatspp</h4>
+                                    <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="x_content">
+                                                <br />
+                                                <form id="demo-form2" data-parsley-validate
+                                                    class="form-horizontal form-label-left input_mask">
+                                                    <div class="row">
+
+
+                                                        <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="template">Template<span
+                                                                        class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <select class="form-control" required id="template"
+                                                                        name="template">
+                                                                        <option>Choose option
+                                                                        </option>
+                                                                        <option>Sever Up</option>
+                                                                        <option>2.3 Update</option>
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                                            <div class="item form-group">
+                                                                <label
+                                                                    class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                    for="template">Template
+                                                                    content<span class="required">*</span>
+                                                                </label>
+                                                                <div class="col-md-7 col-sm-7">
+                                                                    <textarea class="form-control" name="comment" id=""
+                                                                        rows="5"></textarea>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="ln_solid"></div>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" type="reset">Reset</button>
+                                                            <button type="button" class="btn btn-success"
+                                                                data-toggle="modal" data-target="#send-whatsapp"><i
+                                                                    class="fa fa-whatsapp" aria-hidden="true"></i>
+                                                                Send WhatsApp
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- send WhatsApp popup code end -->
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <!-- student detail tabs code start -->
+                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="basic-details-tab" data-toggle="tab" href="#basic-details"
+                            role="tab" aria-controls="basic-details" aria-selected="true">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="time-table-tab" data-toggle="tab" href="#time-table" role="tab"
+                            aria-controls="time-table" aria-selected="false">Time Table</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="payments-tab" data-toggle="tab" href="#payments" role="tab"
+                            aria-controls="payments" aria-selected="false">Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="attendence-tab" data-toggle="tab" href="#attendence" role="tab"
+                            aria-controls="attendence" aria-selected="false">Attendence</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="subjects-tab" data-toggle="tab" href="#subjects" role="tab"
+                            aria-controls="subjects" aria-selected="false">Subjects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab"
+                            aria-controls="result" aria-selected="false">Result</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="document-tab" data-toggle="tab" href="#document" role="tab"
+                            aria-controls="document" aria-selected="false">Document</a>
+                    </li>
+                </ul>
+                <!-- detail tabs code end -->
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="basic-details" role="tabpanel"
+                        aria-labelledby="basic-details-tab">
+                        <div class="student-details row">
+                            <div class="col-lg-4 col-12 col-md-4">
+                                <table>
+                                    <tr>
+                                        <th class="pr-4">Father Name</th>
+                                        <td>{{student.father_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Primary Mobile</th>
+                                        <td>{{student.phone_number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Admission Number</th>
+                                        <td>{{student.admision_number}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Cost</th>
+                                        <td> # 15000 #</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Total Payment Received</th>
+                                        <td># 5000 #</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Next Payment Date</th>
+                                        <td># 2023-04-10 #</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <div class="col-lg-4 col-12 col-md-4">
+                                <table>
+
+                                    <tr>
+                                        <th class="pr-4">Mother Name</th>
+                                        <td>{{student.mother_name}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="pr-4">Secondary Mobile</th>
+                                        <td>{{student.secondary_phone_number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Admission Date</th>
+                                        <td>{{student.AdmisionDate()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Payment Frequency</th>
+                                        <td># Monthly #</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Expected Payment</th>
+                                        <td># 0 #</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Social Catogary</th>
+                                        <td id="social_catogary_value">{{student.social_catogary}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-lg-4 col-12 col-md-4">
+                                <table>
+                                    <tr>
+                                        <th class="pr-4">Address</th>
+                                        <td>{{ student.adddress }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Birth Date</th>
+                                        <td>{{student.BirthDate()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Student Type</th>
+                                        <td># 134 a #</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Total Plan Cost</th>
+                                        <td># 1000 #</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Net Due Payment</th>
+                                        <td># 1000 #</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="pr-4">Blood Group</th>
+                                        <td id="blood_group_value">{{student.blood_group}}</td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="clearfix">
+                            <hr>
+                        </div>
+                        <!-- buttons section -->
+                        <div class="col-12 col-lg-12 col-md-12 mb-2 text-right float-right mt-3">
+                            {% if current_user.user_type == 'admin' %}
+                            <button type="button" class="btn btn btn-secondary" data-toggle="modal"
+                                data-target="#delete-user"><i class="fa fa-trash mr-2"></i>Delete
+                                User</button>
+                            {% endif %}
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#add-comment"><i class="fa fa-comment mr-2"></i>Add
+                                Comment</button>
+
+                        </div>
+
+                        <!-- Add Comment popup -->
+                        <div class="modal fade " id="add-comment" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display: none;">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Add Comment</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="x_content">
+                                                    <br />
+                                                    <form id="demo-form2" data-parsley-validate method="post"
+                                                        action="{{ url_for('add_comment', student_id=student.id) }}"
+                                                        class="form-horizontal form-label-left input_mask">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                                                <div class="item form-group">
+                                                                    <textarea class="form-control" name="comment" id=""
+                                                                        rows="5"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="ln_solid"></div>
+                                                        <div class="item form-group">
+                                                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary"
+                                                                    type="reset">Reset</button>
+                                                                <button type="submit" class="btn btn-success">Add
+                                                                    Comment</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                    <h5 class="mb-3">Comments</h5>
+                                                    {% for comment in student.comments|reverse %}
+
+                                                    <!-- chat bubble -->
+                                                    <div class="chatcontainer shadow-sm rounded">
+                                                        <img src="/static/images/img.jpg" alt="Avatar">
+                                                        <h6 class="mb-0 font-weight-bold mt-2">{{ comment.user.name }}
+                                                        </h6>
+                                                        <div
+                                                            class="mt-1 mb-1 d-flex align-items-center justify-content-between">
+                                                            <p class="float-left mb-0"> {{ comment.comment }}</p>
+                                                            <small class="float-right small text-right"
+                                                                style="width: 45%;">{{
+                                                                comment.exect_time() }} </small>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <!-- chat bubble -->
+
+                                                    {% endfor %}
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Add Comment popup -->
+                        <!-- Add Comment popup -->
+                        <div class="modal fade " id="delete-user" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display: none;">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Delete Student</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="x_content">
+
+                                                    <h6>
+                                                        <span>
+                                                            Please note once you delete the Student,
+                                                            You won't be able to see their details
+                                                            again.
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span class="pt-3">
+                                                            Do You still Want to Delete this Student ?
+                                                        </span>
+
+                                                    </h6>
+                                                    <div class="item form-group">
+                                                        <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                            <a href="{{ url_for('remove_student', student_id=student.id)}}" class="btn btn-primary" type="reset">Delete</a>
+                                                            <button type="submit"
+                                                                class="btn btn-success">Cancel</button>
+                                                        </div>
+                                                    </div>
+
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Add Comment popup -->
+                        <!-- end buttons section -->
+                    </div>
+
+                    <div class="tab-pane fade" id="time-table" role="tabpanel" aria-labelledby="time-table-tab"></div>
+
+
+                    <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+                        <!-- Payment table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Date </th>
+                                        <th class="column-title">Amount</th>
+                                        <th class="column-title">Fee Type</th>
+                                        <th class="column-title">Discount </th>
+                                        <th class="column-title">Discount Type</th>
+                                        <th class="column-title">Payment Method</th>
+                                        <th class="column-title">Reference</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="payment_tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Payment table end -->
+                    </div>
+
+                    <div class="tab-pane fade" id="attendence" role="tabpanel" aria-labelledby="attendence-tab">
+
+                        <div class="x_content">
+                            <br />
+                            <div id="demo-form2" data-parsley-validate
+                                class="form-horizontal form-label-left input_mask">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-5 col-sm-5 label-align"
+                                                for="attendence_date"> Attendence Month
+                                                <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-7 col-sm-7">
+
+                                                <input class="form-control" type="month" required id="attendence_date"
+                                                    name="attendence_date">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="item form-group">
+                                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                <button type="button" id="attendence_button" class="btn btn-primary">
+                                                    Get Attendence</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="ln_solid"></div>
+
+                            </div>
+                        </div>
+
+                        <!-- attendence table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Sr No. </th>
+                                        <th class="column-title">Date</th>
+                                        <th class="column-title">Day</th>
+                                        <th class="column-title text-center">Attendence Detail</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="attendence_table_body">
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- attendence table end -->
+                    </div>
+
+                    <div class="tab-pane fade" id="subjects" role="tabpanel" aria-labelledby="subjects-tab">
+                        <!-- Subject table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Sr. No.</th>
+                                        <th class="column-title">Subject Name</th>
+                                        <th class="column-title">Teacher Name</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="subject_tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Subject table end -->
+                    </div>
+
+                    <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
+
+                        <div class="x_content">
+                            <br />
+                            <div data-parsley-validate class="form-horizontal form-label-left input_mask">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                                        <div class="item form-group">
+                                            <div class="col-md-12 col-sm-12">
+                                                <select class="form-control" required id="class_name">
+                                                    <option value="">Select Class</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                                        <div class="item form-group">
+                                            <div class="col-md-12 col-sm-12">
+                                                <select class="form-control" required id="subject">
+                                                    <option value="">Select Subject</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-5 col-sm-5 label-align"
+                                                for="document_name">Form
+                                                Date <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-7 col-sm-7">
+                                                <input class="form-control" required id="from_date">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                                        <label class="col-form-label col-md-5 col-sm-5 label-align">To
+                                            Date <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-7 col-sm-7">
+                                            <input class="form-control" required id="to_date">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3">
+                                        <!-- <div class="item form-group">
+                                            <div class="col-md-12 col-sm-12 text-right pull-right"> -->
+                                        <button type="button" id="result_button"
+                                            class="col-md-12 col-sm-12 btn btn-primary">
+                                            Get Result</button>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="ln_solid"></div>
+
+                        </div>
+
+                        <!-- result table start -->
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr class="heading">
+                                    <th class="column-title">Subject</th>
+                                    <th class="column-title">Exam Name</th>
+                                    <th class="column-title">Exam Date</th>
+                                    <th class="column-title">Obtained Marks</th>
+                                    <th class="column-title">Total Marks</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="result_tbody">
+
+                            </tbody>
+                        </table>
+                        <!-- result table end -->
+                    </div>
+
+                    <div class="tab-pane fade" id="document" role="tabpanel" aria-labelledby="document-tab">
+
+                        <!-- document upload button -->
+                        <div class="col-12 col-lg-12 col-md-12 mb-2 text-right float-right">
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#document-upload"><i class="fa fa-upload mr-2"></i>Upload Document</button>
+                        </div>
+                        <!-- document upload button -->
+                        <!-- Document popup -->
+                        <div class="modal fade " id="document-upload" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Upload Document
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span
+                                                aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="x_content">
+                                                    <br />
+                                                    <form id="demo-form2" data-parsley-validate
+                                                        action="{{ url_for('save_student_document', student_id=student.id )}}"
+                                                        method="post" enctype="multipart/form-data"
+                                                        class="form-horizontal form-label-left input_mask">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                                <div class="item form-group">
+                                                                    <label
+                                                                        class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                        for="document_name">Document
+                                                                        Name <span class="required">*</span>
+                                                                    </label>
+                                                                    <div class="col-md-7 col-sm-7">
+                                                                        <input type="text" required class="form-control"
+                                                                            id="document_name" name="document_name">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-6 form-group has-feedback">
+                                                                <div class="item form-group">
+                                                                    <label
+                                                                        class="col-form-label col-md-5 col-sm-5 label-align"
+                                                                        for="document_file">Document
+                                                                        File<span class="required">*</span>
+                                                                    </label>
+                                                                    <div class="col-md-7 col-sm-7">
+                                                                        <input type="file" required class="form-control"
+                                                                            id="document_file" name="document_file">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="ln_solid"></div>
+                                                        <div class="item form-group">
+                                                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary"
+                                                                    type="reset">Reset</button>
+                                                                <button type="submit" class="btn btn-success">Upload
+                                                                    Document</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- document popup end -->
+                        <!-- Document table start -->
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Sr. No.</th>
+                                        <th class="column-title">Document Name</th>
+                                        <th class="column-title">Uploaded Date</th>
+                                        <th class="column-title text-center" colspan="2">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="document_tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Document table end -->
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- tabs end -->
+
+
+<h1 id="student_id" style="display: none;">{{student.id}}</h1>
+<h1 id="class_id" style="display: none;">{{last_class.id}}</h1>
+
+
+<script type="module" src="/static/js/pages_script/student_detail/student_detail.js"></script>
+
+
+
+{% endblock %}

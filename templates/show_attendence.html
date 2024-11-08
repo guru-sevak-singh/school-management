@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>Show Attendence | School System</title>
+
+{% endblock %}
+
+{% block body %}
+
+<h1 id="selected_class_value" style="display: none;">{{selected_class}}</h1>
+
+
+<div class="row">
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" id="present_card" style="cursor: pointer;">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-info"> Present Students</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            <i class="fa fa-users text-gray-300" style="margin-right: 5%;" aria-hidden="true"></i> <span
+                                id="present_student_labek"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-info" role="progressbar" aria-valuenow="25" id="present_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" style="cursor: pointer;" id="absent_card">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-danger">Absent Studetns</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0"><i class="fa fa-user text-gray-300"
+                                aria-hidden="true" style="margin-right: 5%;"></i>
+                            <span id="absent_student_label"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-danger" role="progressbar" id="absent_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" style="cursor: pointer;" id="leave_card">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-warning"> Student on Leave</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            <i class="fa fa-pencil-square-o text-gray-300" style="margin-right: 5%;"
+                                aria-hidden="true"></i> <span id="leave_students_label"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-warning" role="progressbar" aria-valuenow="25" id="leave_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" id="all_staff_card" style="cursor: pointer;" itemid="total_card">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-success"> Total Students</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            <i class="fa fa-users text-gray-300" style="margin-right: 5%;" aria-hidden="true"></i> <span
+                                id="total_student_label"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-success" role="progressbar" aria-valuenow="25" id="total_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form action="{{ url_for('show_attendence') }}" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left input_mask" method="get">
+                <div class="row" id="detail_form">
+
+                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+
+                                <input type="date" class="form-control" id="attendence_date" name="attendence_date" required
+                                    value="{{ attendence_date }}">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12">
+
+                                <select class="form-control" id="attendence_class" name="attendence_class">
+                                    <option value="">Chose Class</option>
+                                    {% for clas in all_classes %}
+                                        <option value="{{ clas.id }}">{{ clas.class_name }}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                        <div class="item form-group">
+
+                            <div class="col-md-12 col-sm-12">
+
+                                <select class="form-control" id="section" name="section">
+                                    <option value="{{ selected_section.id }}">{{ selected_section.section_name }}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" class="btn btn-primary"> Get Attendence</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+
+            <!-- Search Student table start -->
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Sr No.</th>
+                            <th class="column-title">Roll Number </th>
+                            <th class="column-title">Name </th>
+                            <th class="column-title">Father Name </th>
+                            <th class="column-title">Gender</th>
+                            <th class="column-title no-link last" colspan="3"><span class="nobr">Attendence</span>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script type="module" src="/static/js/pages_script/attendence/show_attendence.js"></script>
+
+{% endblock %}

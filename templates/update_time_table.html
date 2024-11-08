@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>Update Time Table | School Dashboard</title>
+<style>
+    .time_table_active {
+        position: relative;
+        z-index: 10;
+        transition: all 0.3s linear 0s;
+        min-width: 165px;
+        border-radius: 10%;
+        z-index: 1;
+    }
+
+
+    .time_table_active::before {
+        position: absolute;
+        content: "";
+        min-width: 100%;
+        min-height: 100%;
+        transform: scale(0);
+        top: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 0.25rem;
+        transition: all 0.3s linear 0s;
+    }
+
+    .time_table_active:hover {
+        transform: scale(1.5);
+        z-index: 5;
+        /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+
+    .recess_td {
+        border-bottom: 1px solid #f7f7f7;
+        ;
+    }
+
+    .hidden_element {
+        text-align: center;
+        display: none;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+
+<div class="modal fade " id="schedule-information-form" tabindex="-1" role="dialog" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_content">
+                            <br />
+                            <form id="demo-form2" data-parsley-validate
+                                class="form-horizontal form-label-left input_mask">
+                                <div class="row">
+
+
+                                    <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align"
+                                                for="subject_id">Subject<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-9 col-sm-9">
+                                                <select class="form-control" required id="subject_id" name="subject_id">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 form-group has-feedback">
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align"
+                                                for="teacher_id">Teacher<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-9 col-sm-9">
+                                                <select class="form-control" required id="teacher_id" name="teacher_id">
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="item form-group">
+                                    <div class="col-md-12 col-sm-12 text-right pull-right" id="button_box">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary" type="reset">Reset</button>
+                                        <button type="button" class="btn btn-success" data-toggle="modal"
+                                            data-dismiss="modal" id="add_schedule_button">
+                                            Add Schedule
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Time Table</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <div id="demo-form2" class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="day"> Day
+                            </label>
+                            <div class="col-md-9 col-sm-9">
+                                <select class="form-control" id="day" name="day">
+                                    <option value="">Chose Day</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday ">Thursday </option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align text-left" for="period_counts">
+                                Period Counts
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="number" class="form-control" id="period_counts" readonly
+                                    name="period_counts">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align text-left"
+                                for="break_time">Recess (min)
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="number" class="form-control" id="break_time" readonly name="break_time">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align text-left"
+                                for="recess_after_period">Recess After period
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <input type="number" class="form-control" id="recess_after_period" readonly
+                                    name="recess_after_period">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10 col-sm-10 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align text-center" for="from_time">
+                                School Timing From
+                            </label>
+                            <div class="col-md-4 col-sm-4">
+                                <input type="time" class="form-control" readonly id="from_time" name="from_time">
+
+                            </div>
+
+                            <label class="col-form-label col-md-1 col-sm-1 label-align text-center" for="to_time"> To
+                            </label>
+
+                            <div class="col-md-4 col-sm-4">
+                                <input type="time" class="form-control" readonly id="to_time" name="to_time">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 form-group text-center">
+                        <button class="btn text-white bg-primary" type="button" id="generate_table">
+                            Update Timing
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </div>
+
+            <div class="col-12" style="color: black;">
+                <div class="col-sm-3 col-md-3" style="display: flex; align-items: center; justify-content: center;">
+                    <div
+                        style="height: 15px; width: 15px; margin: auto 5%; border-radius: 10px; border: 1px solid black; background-color: #007bff">
+
+                    </div>
+                    <div>
+                        Teacherr And Subject Assigned
+                    </div>
+
+                </div>
+                <div class="col-sm-3 col-md-3" style="display: flex; align-items: center; justify-content: center">
+                    <div
+                        style="height: 15px; width: 15px; margin: auto 5%; border-radius: 10px; border: 1px solid black; background-color: red;">
+
+                    </div>
+                    <div>
+                        Only Subject Assigned
+                    </div>
+
+                </div>
+                <div class="col-sm-3 col-md-3" style="display: flex; align-items: center; justify-content: center;">
+                    <div class="advanced"
+                        style="height: 15px; width: 15px; margin: auto 5%; border-radius: 10px; border: 1px solid black; background-color: yellow;">
+
+                    </div>
+                    <div>
+                        Only Teacher Assigned
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- time table start -->
+            <!-- Search Student table start -->
+            <div class="table-responsive" id="table_area">
+                <table class="table table-bordered">
+                    <thead id="thead">
+
+                    </thead>
+
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- time table end -->
+        </div>
+
+
+    </div>
+
+    <script type="module" src="/static/js/pages_script/update_time_table/main.js"></script>
+
+</div>
+
+
+{% endblock %}

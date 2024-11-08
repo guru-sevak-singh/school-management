@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>Add Notice | School Dashboard</title>
+
+<style>
+    .card-scrollbar::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .card-scrollbar::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+    .card-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #007bff;
+        /* Use btn-primary color */
+        border-radius: 6px;
+    }
+
+    .card-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #0056b3;
+        /* Darker shade for hover */
+    }
+
+    .post-data {
+        display: inline-block;
+        font-size: 14px;
+        color: #ffffff;
+        padding: 5px 14px;
+        border-radius: 20px;
+        margin-bottom: 14px;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Notice Board</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate action="{{ url_for('notice_board') }}" method="post"
+                class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+
+                    <div class="form-group col-md-12 col-sm-12">
+                        <label class="col-form-label col-md-5 col-sm-5 label-align text-left" for="notice"> Notice<span
+                                class="required">*</span>
+                        </label>
+
+                        <textarea class="form-control" name="notice" rows="5"></textarea>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" class="btn btn-success">Add Notice</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="col-xl-12 col-lg-12 mb-2">
+        <div class="card l-bg-cherry">
+            <div class="card-statistic-3 p-4">
+                <h5 class="card-title mb-0 text-dark">
+                    Notice Board
+                </h5>
+                <div class="row card-scrollbar" style="overflow: auto; height: 60vh" id="notice_board">
+                    <!-- Notice Board -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script type="module" src="/static/js/pages_script/notice_board/notice_board.js"></script>
+
+
+
+
+{% endblock %}

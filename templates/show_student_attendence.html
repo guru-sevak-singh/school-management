@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" style="cursor: pointer;">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-info"> Present Students</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            <i class="fa fa-users text-gray-300" style="margin-right: 5%;" aria-hidden="true"></i> <span
+                                id="present_student_labek"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-info" role="progressbar" aria-valuenow="25" id="present_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" style="cursor: pointer;">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-danger">Absent Studetns</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0"><i class="fa fa-user text-gray-300"
+                                aria-hidden="true" style="margin-right: 5%;"></i>
+                            <span id="absent_student_label"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-danger" role="progressbar" id="absent_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" style="cursor: pointer;">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-warning"> Student on Leave</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            <i class="fa fa-pencil-square-o text-gray-300" style="margin-right: 5%;"
+                                aria-hidden="true"></i> <span id="leave_students_label"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-warning" role="progressbar" aria-valuenow="25" id="leave_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xl-3 col-lg-3 mb-2">
+        <div class="card l-bg-cherry" id="all_staff_card" style="cursor: pointer;">
+            <div class="card-statistic-3 p-4">
+
+                <h5 class="card-title mb-0 text-success"> Total Students</h5>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0">
+                            <i class="fa fa-users text-gray-300" style="margin-right: 5%;" aria-hidden="true"></i> <span
+                                id="total_student_label"></span>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="bg-success" role="progressbar" aria-valuenow="25" id="total_students" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate action="{{ url_for('show_student_attendence')}}" method="get"
+                class="form-horizontal form-label-left input_mask">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="attendence_type">
+                                Attendence Type
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                <select class="form-control" required id="attendence_type" name="attendence_type">
+                                    {% if attendence_type == "Daily" %}
+                                    <option value="Daily" selected>Daily</option>
+                                    <option value="Montly">Montly</option>
+                                    {% else %}
+                                    <option value="Daily">Daily</option>
+                                    <option value="Montly" selected>Montly</option>
+
+                                    {% endif %}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 form-group has-feedback">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-5 col-sm-5 label-align" for="attendence_date"> Date
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-7 col-sm-7">
+                                {% if attendence_type == "Daily" %}
+                                <input class="form-control" type="date" required id="attendence_date"
+                                    name="attendence_date" value="{{attendence_date}}">
+                                {% else %}
+                                <input class="form-control" type="month" required id="attendence_date"
+                                    name="attendence_date" value="{{attendence_date}}">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                        <div class="item form-group">
+                            <div class="col-md-12 col-sm-12 text-right pull-right">
+                                <button type="submit" class="btn btn-primary"> Get Attendence</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="ln_solid"></div>
+
+            </form>
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title"># </th>
+                            <th class="column-title">Class Name</th>
+
+                            <th class="column-title text-center">
+                                Present
+                            </th>
+                            <th class="column-title text-center">
+                                Absent
+                            </th>
+                            <th class="column-title text-center">
+                                Leave
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Search Student table end -->
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+<!-- <script type="module" src="/static/js/pages_script/attendence/show_student_attendence/main.js"></script> -->
+
+{% if attendence_type == 'Daily' %}
+
+<script type="module" src="/static/js/pages_script/attendence/show_student_attendence/daily_type.js"></script>
+
+{% else %}
+
+<script type="module" src="/static/js/pages_script/attendence/show_student_attendence/monthly_type.js"></script>
+
+{% endif %}
+
+<script type="module" src="/static/js/pages_script/attendence/show_staff_attendence/ui.js"></script>
+
+
+{% endblock %}
