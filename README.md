@@ -71,5 +71,5 @@ Planned improvements include:
 
 Clone the repo:  
 ```bash
-git clone https://github.com/guru-sevak-singh/school-management-dashboard.git
-cd school-management-dashboard
+git clone https://github.com/guru-sevak-singh/school-management
+cd school-management
